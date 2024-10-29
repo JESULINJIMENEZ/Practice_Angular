@@ -12,7 +12,7 @@ import { IUser } from '../../../interface/user';
 })
 export class PostCreateComponent {
   userForm: FormGroup;
-
+  
   constructor(private fb: FormBuilder, private postService: PostServiceService) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
@@ -23,7 +23,9 @@ export class PostCreateComponent {
 
   onSubmit() {
     if (this.userForm.valid) {
-      this.postService.addUser(this.userForm.value);
+      const userData = this.userForm.value;
+      console.log("User data before creation:", userData); // Imprime los datos del formulario
+      this.postService.createUser(userData);
       this.userForm.reset(); // Resetear el formulario
     }
   }
