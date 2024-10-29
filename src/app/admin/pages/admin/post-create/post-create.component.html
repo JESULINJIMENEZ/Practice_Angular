@@ -1,1 +1,23 @@
-<p>post-create works!</p>
+<div class="card m-3">
+    <div class="card-header">
+      <h3 class="card-title">Crear Usuario</h3>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input id="name" formControlName="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de Usuario</label>
+          <input id="username" formControlName="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" formControlName="email" type="email" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Crear Usuario</button>
+      </form>
+    </div>
+  </div>
+  

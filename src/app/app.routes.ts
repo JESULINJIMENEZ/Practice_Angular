@@ -4,7 +4,7 @@ import { AdminLayoutComponent } from './admin/layout/admin-layout/admin-layout.c
 import { PostCreateComponent } from './admin/pages/admin/post-create/post-create.component';
 import { UpdatePostComponent } from './admin/components/update-post/update-post.component';
 import { ShowPostComponent } from './admin/components/show-post/show-post.component';
-import { PostLisComponent } from './admin/pages/admin/post-list/post-list.component';
+import { PostListComponent } from './admin/pages/admin/post-list/post-list.component';
 
 
 export const routes: Routes = [
@@ -21,7 +21,7 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'list',
-                        component: PostLisComponent
+                        component: PostListComponent
                     },
                     {
                         path: 'create',

@@ -1,31 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { PostServiceService } from '../../../services/post-service.service';
 import { IUser } from '../../../interface/user';
-import { NgForOf } from '@angular/common';
 
 @Component({
-  selector: 'app-post-create',
+  selector: 'app-post-list',
   standalone: true,
-  imports: [NgForOf],
+  imports: [CommonModule], // Importa CommonModule aquí
   templateUrl: './post-list.component.html',
-  styleUrl: './post-list.component.scss'
+  styleUrls: ['./post-list.component.scss']
 })
-export class PostLisComponent {
+export class PostListComponent {
+  listPost: IUser[] = [];
 
-  listPost: IUser[] = []
-
-  constructor(private postService: PostServiceService){
-    this.postService.getUser().subscribe({
-      next:(user)=> {
-        this.listPost = user
-        console.log(this.listPost)
-        
-      },
-      error: (error) => {
-        console.log(error);
-        
-      }
-    })
+  constructor(private postService: PostServiceService) {
+    this.postService.users$.subscribe(users => {
+      this.listPost = users;
+    });
   }
-
 }
