@@ -6,7 +6,6 @@ import { UpdatePostComponent } from './admin/components/update-post/update-post.
 import { ShowPostComponent } from './admin/components/show-post/show-post.component';
 import { PostListComponent } from './admin/pages/admin/post-list/post-list.component';
 
-
 export const routes: Routes = [
     {
         path: 'auth',
