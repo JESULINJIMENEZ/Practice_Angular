@@ -1,0 +1,48 @@
+body {
+    display: flex;
+  }
+  
+  .sidebar {
+    min-width: 250px;
+    background-color: #343a40; /* Fondo oscuro */
+    height: 100vh;
+    position: fixed; /* Fija el sidebar */
+    right: 0; /* Posiciónalo a la derecha */
+    top: 56px; /* Espacio para el navbar */
+    overflow-y: auto; /* Desplazamiento si es necesario */
+    color: white; /* Color de texto blanco */
+  }
+  
+  .sidebar h5 {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .nav-link {
+    color: #d4d4d4; /* Color de los enlaces */
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: #495057; /* Fondo al pasar el ratón */
+    color: #ffffff; /* Color de texto al pasar el ratón */
+  }
+  
+  .sidebar .nav-link.active {
+    background-color: #007bff; /* Fondo activo */
+    color: white; /* Color de texto activo */
+  }
+  
+  .content {
+    margin-right: 250px; /* Espacio para el sidebar */
+    flex-grow: 1; /* Toma el resto del espacio */
+    padding: 20px; /* Espaciado interno */
+  }
+  
+  h1 {
+    font-size: 2.5rem; /* Tamaño de la fuente */
+  }
+  
+  .lead {
+    font-size: 1.25rem; /* Tamaño de texto para la descripción */
+  }
+  

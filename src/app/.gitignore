@@ -1,0 +1,27 @@
+# Dependencias
+node_modules/
+.vscode/
+.angular/
+# Archivos de compilación
+dist/
+out-tsc/
+
+# Archivos de entorno
+.env
+.env.local
+
+# Archivos de configuración del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.vscode/
+.idea/
+
+# Archivos de log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de cobertura
+coverage/
