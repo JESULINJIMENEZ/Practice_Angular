@@ -17,7 +17,15 @@ export class PostServiceService {
   private loadUsers() {
     this.http.get<IUser[]>("https://jsonplaceholder.typicode.com/users").subscribe(apiUsers => {
       const localUsers = this.loadUsersFromLocalStorage();
-      const allUsers = [...apiUsers, ...localUsers];
+  
+
+      const allUsers = [
+        ...apiUsers,
+        ...localUsers.filter(localUser => 
+          !apiUsers.some(apiUser => apiUser.id === localUser.id)
+        )
+      ];
+  
       this.userSubject.next(allUsers);
     });
   }
@@ -28,7 +36,7 @@ export class PostServiceService {
   }
 
   createUser(user: IUser) {
-    const newUser = { ...user, id: Date.now() }; // Simulando un nuevo ID
+    const newUser = { ...user, id: Date.now() }; 
     const currentUsers = this.userSubject.getValue();
     currentUsers.push(newUser);
     this.userSubject.next(currentUsers);
@@ -41,9 +49,9 @@ export class PostServiceService {
     const currentUsers = this.userSubject.getValue();
     const index = currentUsers.findIndex(u => u.id === user.id);
     if (index !== -1) {
-      currentUsers[index] = { ...user }; // Actualiza el usuario
+      currentUsers[index] = { ...user };
       this.userSubject.next(currentUsers);
-      this.saveUsersToLocalStorage(currentUsers); // Actualiza localStorage
+      this.saveUsersToLocalStorage(currentUsers); 
     }
   }
 
@@ -53,7 +61,7 @@ export class PostServiceService {
     if (index !== -1) {
       currentUsers.splice(index, 1);
       this.userSubject.next(currentUsers);
-      this.saveUsersToLocalStorage(currentUsers); // Actualiza localStorage
+      this.saveUsersToLocalStorage(currentUsers); 
     }
   }
 

@@ -7,7 +7,7 @@ import { IUser } from '../../../interface/user';
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule], // Importa CommonModule aquí
+  imports: [CommonModule], 
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss']
 })

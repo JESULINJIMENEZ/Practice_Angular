@@ -3,18 +3,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostServiceService } from '../../../services/post-service.service';
 import { IUser } from '../../../interface/user';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
-  standalone: true, // Marca el componente como standalone
-  imports: [ReactiveFormsModule], // Asegúrate de importar ReactiveFormsModule aquí
+  standalone: true, 
+  imports: [ReactiveFormsModule], 
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.scss'],
 })
 export class PostCreateComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private postService: PostServiceService) {
+  constructor(private fb: FormBuilder, private postService: PostServiceService, private router: Router) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       username: ['', Validators.required],
@@ -26,8 +28,9 @@ export class PostCreateComponent {
     if (this.userForm.valid) {
       const newUser: IUser = this.userForm.value;
       this.postService.createUser(newUser);
-      this.userForm.reset(); // Reinicia el formulario después de enviar
+      this.userForm.reset(); 
       console.log("Usuario creado:", newUser);
+      this.router.navigate(['/admin/post/list'])
     }
   }
 }

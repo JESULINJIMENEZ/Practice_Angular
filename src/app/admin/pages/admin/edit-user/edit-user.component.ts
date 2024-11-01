@@ -9,14 +9,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-edit',
-  standalone: true, // Si es un componente standalone
-  imports: [ReactiveFormsModule, CommonModule], // Importar módulos correctamente
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule], 
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
   userForm: FormGroup;
-  userId!: number; // Usa el operador ! para indicar que se asignará más adelante
+  userId!: number; 
 
   constructor(
     private fb: FormBuilder,
