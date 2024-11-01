@@ -15,11 +15,8 @@ export class PostServiceService {
   }
 
   private loadUsers() {
-    // Cargar usuarios desde la API
     this.http.get<IUser[]>("https://jsonplaceholder.typicode.com/users").subscribe(apiUsers => {
-      // Cargar usuarios desde localStorage
       const localUsers = this.loadUsersFromLocalStorage();
-      // Combinar ambos conjuntos de usuarios
       const allUsers = [...apiUsers, ...localUsers];
       this.userSubject.next(allUsers);
     });
@@ -31,41 +28,40 @@ export class PostServiceService {
   }
 
   createUser(user: IUser) {
-    // Simulación de creación de usuario
     const newUser = { ...user, id: Date.now() }; // Simulando un nuevo ID
     const currentUsers = this.userSubject.getValue();
     currentUsers.push(newUser);
     this.userSubject.next(currentUsers);
     
     // Guardar el nuevo usuario en localStorage
-    const localUsers = this.loadUsersFromLocalStorage();
-    localUsers.push(newUser);
-    localStorage.setItem('users', JSON.stringify(localUsers));
+    this.saveUsersToLocalStorage(currentUsers);
   }
 
-  editUser(user: IUser){
-    // Simulación de edición de usuario
+  editUser(user: IUser) {
     const currentUsers = this.userSubject.getValue();
     const index = currentUsers.findIndex(u => u.id === user.id);
-    if(index!== -1){
-      currentUsers[index] = {...user};
+    if (index !== -1) {
+      currentUsers[index] = { ...user }; // Actualiza el usuario
       this.userSubject.next(currentUsers);
+      this.saveUsersToLocalStorage(currentUsers); // Actualiza localStorage
     }
   }
 
-  deleteUser(id: number){
-    // Simulación de eliminación de usuario
+  deleteUser(id: number) {
     const currentUsers = this.userSubject.getValue();
     const index = currentUsers.findIndex(u => u.id === id);
-    if(index!== -1){
+    if (index !== -1) {
       currentUsers.splice(index, 1);
       this.userSubject.next(currentUsers);
+      this.saveUsersToLocalStorage(currentUsers); // Actualiza localStorage
     }
-
-    // Eliminar el usuario de localStorage
-    const localUsers = this.loadUsersFromLocalStorage();
-    localUsers.splice(index, 1);
-    localStorage.setItem('users', JSON.stringify(localUsers));
   }
 
+  getUserById(id: number): IUser | undefined {
+    return this.userSubject.getValue().find(user => user.id === id);
+  }
+
+  private saveUsersToLocalStorage(users: IUser[]) {
+    localStorage.setItem('users', JSON.stringify(users));
+  }
 }
