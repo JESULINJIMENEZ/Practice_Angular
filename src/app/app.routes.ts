@@ -2,9 +2,11 @@ import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './auth/layout/auth-layout/auth-layout.component';
 import { AdminLayoutComponent } from './admin/layout/admin-layout/admin-layout.component';
 import { PostCreateComponent } from './admin/pages/admin/post-create/post-create.component';
-import { UpdatePostComponent } from './admin/components/update-post/update-post.component';
-import { ShowPostComponent } from './admin/components/show-post/show-post.component';
+
 import { PostListComponent } from './admin/pages/admin/post-list/post-list.component';
+import { EditUserComponent } from './admin/components/edit-user/edit-user.component';
+
+
 
 export const routes: Routes = [
     {
@@ -28,14 +30,29 @@ export const routes: Routes = [
                     },
                     {
                         path: 'edit',
-                        component: UpdatePostComponent
+                        component: EditUserComponent
                     },
+
+                  
                     {
-                        path: 'show',
-                        component: ShowPostComponent
+                        path: '',
+                        redirectTo: 'post/list',  
+                        pathMatch: 'full'      
                     }
                 ]
             }
         ]
+    },
+
+    {
+        path: '',
+        redirectTo: 'admin',  
+        pathMatch: 'full'     
+    },
+
+    {
+        path: '**',
+        redirectTo: 'admin',  
+        pathMatch: 'full'
     }
 ];
