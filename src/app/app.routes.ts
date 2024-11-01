@@ -4,7 +4,7 @@ import { AdminLayoutComponent } from './admin/layout/admin-layout/admin-layout.c
 import { PostCreateComponent } from './admin/pages/admin/post-create/post-create.component';
 
 import { PostListComponent } from './admin/pages/admin/post-list/post-list.component';
-import { EditUserComponent } from './admin/components/edit-user/edit-user.component';
+import { EditUserComponent } from './admin/pages/admin/edit-user/edit-user.component';
 
 
 
