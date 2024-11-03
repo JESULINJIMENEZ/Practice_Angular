@@ -7,7 +7,7 @@ import { IUser } from '../interface/user';
   providedIn: 'root'
 })
 export class PostServiceService {
-  private apiUrl = 'http://127.0.0.1:8000/users/';  // URL de tu API
+  private apiUrl = 'http://127.0.0.1:8000/users/';  // Asegúrate de que esta sea la URL correcta
   private usersSubject = new BehaviorSubject<IUser[]>([]);
   users$ = this.usersSubject.asObservable();
 
@@ -20,10 +20,9 @@ export class PostServiceService {
   }
 
   createUser(user: IUser): void {
-    const { id, ...userData } = user; // Excluye id si no es necesario
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    this.http.post<IUser>(this.apiUrl, userData, { headers }).subscribe(
+  
+    this.http.post<IUser>(this.apiUrl, user, { headers }).subscribe(
       newUser => {
         this.loadUsers();  // Refrescar la lista después de crear
       },
@@ -32,6 +31,7 @@ export class PostServiceService {
       }
     );
   }
+  
 
   getUserById(id: number): IUser | undefined {
     let user: IUser | undefined;
@@ -42,14 +42,19 @@ export class PostServiceService {
   }
 
   editUser(updatedUser: IUser): void {
-    this.http.put<IUser>(`${this.apiUrl}${updatedUser.id}/`, updatedUser).subscribe(() => {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http.put<IUser>(`${this.apiUrl}${updatedUser.id}/`, updatedUser, { headers }).subscribe(() => {
       this.loadUsers();  // Refrescar la lista después de editar
+    }, error => {
+      console.error('Error al editar usuario:', error);
     });
   }
 
   deleteUser(userId: number): void {
     this.http.delete(`${this.apiUrl}${userId}/`).subscribe(() => {
       this.loadUsers();  // Refrescar la lista después de eliminar
+    }, error => {
+      console.error('Error al eliminar usuario:', error);
     });
   }
 }

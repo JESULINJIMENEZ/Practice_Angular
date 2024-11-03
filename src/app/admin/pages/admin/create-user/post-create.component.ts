@@ -32,14 +32,16 @@ export class PostCreateComponent {
     if (this.userForm.valid) {
       const newUser: IUser = {
         ...this.userForm.value,
+        // id: undefined, // No envíes el id si no es necesario
       };
-
+  
       this.postService.createUser(newUser);
-      this.userForm.reset(); 
+      this.userForm.reset();
       console.log("Usuario creado:", newUser);
       this.router.navigate(['/admin/post/list']);
     } else {
       console.log("Formulario inválido", this.userForm.errors);
     }
   }
+  
 }

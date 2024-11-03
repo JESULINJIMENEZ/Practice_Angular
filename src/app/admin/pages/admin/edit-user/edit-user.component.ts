@@ -32,7 +32,7 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.userId = +params['id']; 
+      this.userId = +params['id'];  // Convertir a número
       this.loadUser();
     });
   }
@@ -45,6 +45,8 @@ export class EditUserComponent implements OnInit {
         username: user.username,
         correo: user.correo,
       });
+    } else {
+      console.error("Usuario no encontrado");
     }
   }
 
