@@ -1,6 +1,6 @@
 export interface IUser {
-    id: number;       
-    name: string;      
+    id?: number;       // Opcional, ya que se genera automáticamente
+    nombre: string;    // Debe coincidir con lo que espera la API
     username: string;  
-    email: string;     
+    correo: string;    // Debe coincidir con lo que espera la API
 }

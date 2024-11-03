@@ -6,16 +6,16 @@
     <div class="card-body">
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
-          <label for="name" class="form-label">Nombre</label>
-          <input id="name" formControlName="name" class="form-control" required>
+          <label for="nombre" class="form-label">Nombre</label>
+          <input id="nombre" formControlName="nombre" class="form-control" required>
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Nombre de Usuario</label>
           <input id="username" formControlName="username" class="form-control" required>
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input id="email" formControlName="email" type="email" class="form-control" required>
+          <label for="correo" class="form-label">Email</label>
+          <input id="correo" formControlName="correo" type="email" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Guardar Cambios</button>
       </form>

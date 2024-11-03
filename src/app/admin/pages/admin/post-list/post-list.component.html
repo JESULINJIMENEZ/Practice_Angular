@@ -17,9 +17,9 @@
         <tbody>
           <tr class="align-middle" *ngFor="let post of listPost">
             <td>{{ post.id }}</td>
-            <td>{{ post.name }}</td>
+            <td>{{ post.nombre }}</td>
             <td>{{ post.username }}</td>
-            <td>{{ post.email }}</td>
+            <td>{{ post.correo }}</td>
             <td>
               <div class="d-flex justify-content-center">
                 <button class="btn btn-warning me-2" (click)="editUser(post)">

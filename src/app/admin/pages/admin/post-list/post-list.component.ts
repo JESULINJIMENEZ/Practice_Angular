@@ -15,7 +15,7 @@ export class PostListComponent {
   listPost: IUser[] = [];
 
   constructor(private postService: PostServiceService, private router: Router) { 
-   
+   this.postService.loadUsers();
     this.postService.users$.subscribe(users => {
       this.listPost = users;
     });
@@ -26,8 +26,11 @@ export class PostListComponent {
     this.router.navigate(['/admin/post/edit', user.id]); 
   }
 
-  deleteUser(userId: number) {
-
-    this.postService.deleteUser(userId);
+  deleteUser(userId?: number) {
+    if (userId) {
+      this.postService.deleteUser(userId);
+    } else {
+      console.error('No se puede eliminar: el ID del usuario es indefinido');
+    }
   }
 }

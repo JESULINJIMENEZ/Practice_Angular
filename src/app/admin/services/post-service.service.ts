@@ -1,75 +1,55 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { IUser } from '../interface/user';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostServiceService {
-  private userSubject = new BehaviorSubject<IUser[]>([]);
-  users$ = this.userSubject.asObservable();
+  private apiUrl = 'http://127.0.0.1:8000/users/';  // URL de tu API
+  private usersSubject = new BehaviorSubject<IUser[]>([]);
+  users$ = this.usersSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.loadUsers();
-  }
+  constructor(private http: HttpClient) {}
 
-  private loadUsers() {
-    this.http.get<IUser[]>("https://jsonplaceholder.typicode.com/users").subscribe(apiUsers => {
-      const localUsers = this.loadUsersFromLocalStorage();
-  
-
-      const allUsers = [
-        ...apiUsers,
-        ...localUsers.filter(localUser => 
-          !apiUsers.some(apiUser => apiUser.id === localUser.id)
-        )
-      ];
-  
-      this.userSubject.next(allUsers);
+  loadUsers() {
+    this.http.get<IUser[]>(this.apiUrl).subscribe(users => {
+      this.usersSubject.next(users);
     });
   }
 
-  private loadUsersFromLocalStorage(): IUser[] {
-    const usersJson = localStorage.getItem('users');
-    return usersJson ? JSON.parse(usersJson) : [];
-  }
+  createUser(user: IUser): void {
+    const { id, ...userData } = user; // Excluye id si no es necesario
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  createUser(user: IUser) {
-    const newUser = { ...user, id: Date.now() }; 
-    const currentUsers = this.userSubject.getValue();
-    currentUsers.push(newUser);
-    this.userSubject.next(currentUsers);
-    
-    // Guardar el nuevo usuario en localStorage
-    this.saveUsersToLocalStorage(currentUsers);
-  }
-
-  editUser(user: IUser) {
-    const currentUsers = this.userSubject.getValue();
-    const index = currentUsers.findIndex(u => u.id === user.id);
-    if (index !== -1) {
-      currentUsers[index] = { ...user };
-      this.userSubject.next(currentUsers);
-      this.saveUsersToLocalStorage(currentUsers); 
-    }
-  }
-
-  deleteUser(id: number) {
-    const currentUsers = this.userSubject.getValue();
-    const index = currentUsers.findIndex(u => u.id === id);
-    if (index !== -1) {
-      currentUsers.splice(index, 1);
-      this.userSubject.next(currentUsers);
-      this.saveUsersToLocalStorage(currentUsers); 
-    }
+    this.http.post<IUser>(this.apiUrl, userData, { headers }).subscribe(
+      newUser => {
+        this.loadUsers();  // Refrescar la lista después de crear
+      },
+      error => {
+        console.error('Error al crear usuario:', error);
+      }
+    );
   }
 
   getUserById(id: number): IUser | undefined {
-    return this.userSubject.getValue().find(user => user.id === id);
+    let user: IUser | undefined;
+    this.usersSubject.subscribe(users => {
+      user = users.find(u => u.id === id);
+    });
+    return user;
   }
 
-  private saveUsersToLocalStorage(users: IUser[]) {
-    localStorage.setItem('users', JSON.stringify(users));
+  editUser(updatedUser: IUser): void {
+    this.http.put<IUser>(`${this.apiUrl}${updatedUser.id}/`, updatedUser).subscribe(() => {
+      this.loadUsers();  // Refrescar la lista después de editar
+    });
+  }
+
+  deleteUser(userId: number): void {
+    this.http.delete(`${this.apiUrl}${userId}/`).subscribe(() => {
+      this.loadUsers();  // Refrescar la lista después de eliminar
+    });
   }
 }
