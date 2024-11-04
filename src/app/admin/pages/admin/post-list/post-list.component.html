@@ -17,8 +17,8 @@
         <tbody>
           <tr class="align-middle" *ngFor="let post of listPost">
             <td>{{ post.id }}</td>
-            <td>{{ post.nombre }}</td>
-            <td>{{ post.username }}</td>
+            <td>{{ post.nombre | capitalize}}</td>
+            <td>{{ post.username | capitalize }}</td>
             <td>{{ post.correo }}</td>
             <td>
               <div class="d-flex justify-content-center">

@@ -5,3 +5,5 @@ export interface IMessageFlash {
     delay?: number;
     class?: string;
 }
+
+
