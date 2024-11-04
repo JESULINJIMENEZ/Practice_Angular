@@ -1,5 +1,3 @@
-// src/app/shared/message-flash.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { MessageFlashService } from './message-flash.service';
 import { IMessageFlash } from './message-flash';
@@ -28,6 +26,6 @@ export class MessageFlashComponent implements OnInit {
     }
 
     close() {
-        this.messageFlashService.mClose();
+        this.messageFlashService.mCerrar();
     }
 }

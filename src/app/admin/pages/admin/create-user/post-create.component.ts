@@ -43,14 +43,14 @@ export class PostCreateComponent {
       this.postService.createUser(newUser);
       this.userForm.reset();
 
-      // Muestra una notificación de éxito
+
       this.messageFlashService.success('Usuario creado con éxito');
       
       console.log("Usuario creado:", newUser);
       this.router.navigate(['/admin/post/list']);
     } else {
       console.log("Formulario inválido", this.userForm.errors);
-      // Muestra una notificación de error
+
       this.messageFlashService.danger('Formulario inválido. Por favor, corrige los errores.');
     }
   }

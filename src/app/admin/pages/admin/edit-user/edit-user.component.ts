@@ -5,7 +5,7 @@ import { IUser } from '../../../interface/user';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { MessageFlashService } from '../../../../shared/message-flash.service';  
 @Component({
   selector: 'app-post-edit',
   standalone: true,
@@ -21,7 +21,8 @@ export class EditUserComponent implements OnInit {
     private fb: FormBuilder,
     private postService: PostServiceService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private messageFlashService: MessageFlashService 
   ) {
     this.userForm = this.fb.group({
       nombre: ['', [Validators.required, this.noWhitespaceValidator]],
@@ -59,6 +60,7 @@ export class EditUserComponent implements OnInit {
     if (this.userForm.valid) {
       const updatedUser: IUser = { id: this.userId, ...this.userForm.value };
       this.postService.editUser(updatedUser);
+      this.messageFlashService.success('Usuario editado correctamente');   
       this.router.navigate(['/admin/post/list']);
     } else {
       console.log("Formulario inválido", this.userForm.errors);

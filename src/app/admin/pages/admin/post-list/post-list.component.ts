@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router'; 
 import { PostServiceService } from '../../../services/post-service.service';
 import { IUser } from '../../../interface/user';
+import { MessageFlashService } from '../../../../shared/message-flash.service';
 
 @Component({
   selector: 'app-post-list',
@@ -14,7 +15,10 @@ import { IUser } from '../../../interface/user';
 export class PostListComponent {
   listPost: IUser[] = [];
 
-  constructor(private postService: PostServiceService, private router: Router) { 
+  constructor(
+    private messageFlashService: MessageFlashService,  // Importa el servicio de mensajes
+    private postService: PostServiceService, 
+    private router: Router) { 
    this.postService.loadUsers();
     this.postService.users$.subscribe(users => {
       this.listPost = users;
@@ -28,6 +32,7 @@ export class PostListComponent {
 
   deleteUser(userId?: number) {
     if (userId) {
+      this.messageFlashService.danger('Usuario eliminado');
       this.postService.deleteUser(userId);
     } else {
       console.error('No se puede eliminar: el ID del usuario es indefinido');

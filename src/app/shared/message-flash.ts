@@ -1,5 +1,3 @@
-
-
 export interface IMessageFlash {
     message: string;
     type: string;

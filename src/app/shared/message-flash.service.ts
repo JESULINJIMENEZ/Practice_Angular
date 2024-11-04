@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMessageFlash } from './message-flash';
@@ -24,12 +23,12 @@ export class MessageFlashService {
 
         if (iMessageFlash.show) {
             setTimeout(() => {
-                this.mClose();
+                this.mCerrar();
             }, iMessageFlash.delay);
         }
     }
 
-    mClose() {
+    mCerrar() {
         this.data.next({ message: '', type: '', show: false });
     }
 
