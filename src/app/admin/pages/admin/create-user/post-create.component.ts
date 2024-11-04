@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { PostServiceService } from '../../../services/post-service.service';
 import { IUser } from '../../../interface/user';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageFlashService } from '../../../../shared/message-flash.service';  // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-post-create',
@@ -15,7 +16,12 @@ import { Router } from '@angular/router';
 export class PostCreateComponent {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private postService: PostServiceService, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private postService: PostServiceService, 
+    private router: Router,
+    private messageFlashService: MessageFlashService // Importa el servicio de mensajes
+  ) {
     this.userForm = this.fb.group({
       nombre: ['', [Validators.required, this.noWhitespaceValidator]],
       username: ['', [Validators.required, this.noWhitespaceValidator]],
@@ -32,16 +38,20 @@ export class PostCreateComponent {
     if (this.userForm.valid) {
       const newUser: IUser = {
         ...this.userForm.value,
-        // id: undefined, // No envíes el id si no es necesario
       };
   
       this.postService.createUser(newUser);
       this.userForm.reset();
+
+      // Muestra una notificación de éxito
+      this.messageFlashService.success('Usuario creado con éxito');
+      
       console.log("Usuario creado:", newUser);
       this.router.navigate(['/admin/post/list']);
     } else {
       console.log("Formulario inválido", this.userForm.errors);
+      // Muestra una notificación de error
+      this.messageFlashService.danger('Formulario inválido. Por favor, corrige los errores.');
     }
   }
-  
 }

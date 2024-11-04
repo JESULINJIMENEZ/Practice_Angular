@@ -32,7 +32,7 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.userId = +params['id'];  // Convertir a número
+      this.userId = +params['id']; 
       this.loadUser();
     });
   }
